@@ -1,11 +1,12 @@
 ---
-- hosts: all
+- hosts: doikrb.bigdata.local
+  connection: ssh
+  remote_user: doikrb
+  become: True
+  gather_facts: False
   tasks:
-    - name: Stop VM
-      proxmox_kvm:
-        api_user: nikandafee@pve
-        api_password: azbgsm4m3s
-        api_host: 10.147.248.21
-        vmid: 158
-        state: stopped
-
+   - name: Stop and disable firewalld.
+     service:
+       name: firewalld
+       state: stopped
+       enabled: False
