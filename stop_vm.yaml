@@ -1,27 +1,6 @@
 ---
-- hosts: all
-  gather_facts: false
-
+- name: Stop VM in Proxmox
+  hosts: localhost
   tasks:
-    - name: Stop template VM Will timeout
-      community.general.proxmox_kvm:
-        api_user: "{{ pve_user }}"
-        api_token_id: "{{ pve_token_id }}"
-        api_token_secret: "{{ pve_token_secret }}"
-        api_host: "{{ pve_api_host }}"
-        vmid: "{{ pve_template_vm_id }}"
-        state: stopped
-        force: true
-      delegate_to: localhost
-
-    - name: Stop template VM will succeed after 10 minutes
-      community.general.proxmox_kvm:
-        api_user: "{{ pve_user }}"
-        api_token_id: "{{ pve_token_id }}"
-        api_token_secret: "{{ pve_token_secret }}"
-        api_host: "{{ pve_api_host }}"
-        vmid: "{{ pve_template_vm_id }}"
-        state: stopped
-        force: true
-        timeout: 180
-      delegate_to: localhost
+    - name: Stop VM
+      command: qm stop 158
