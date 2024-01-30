@@ -1,7 +1,6 @@
 ---
 - hosts: all
   connection: ssh
-  remote_user: doikrb
   become: True
   gather_facts: False
   tasks:
