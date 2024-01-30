@@ -1,8 +1,19 @@
-# Stop container with force
-- proxmox:
-    vmid: 197
-    api_user: API@pve
-    api_password: 5b8f7130-adc7-43b9-9a2f-a980b21b46e5
-    api_host: node1
-    force: yes
-    state: stopped
+---
+- name: Install Nginx on Ubuntu
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Update apt package cache
+      apt:
+        update_cache: yes
+
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Start Nginx service
+      systemd:
+        name: nginx
+        state: started
