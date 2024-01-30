@@ -1,6 +1,6 @@
 ---
 - name: Stop VM in Proxmox
-  hosts: localhost
+  hosts: all
   tasks:
     - name: Stop VM
       command: qm stop 158
