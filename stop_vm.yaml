@@ -1,19 +1,27 @@
 ---
-- name: Install Nginx on Ubuntu
-  hosts: all
-  become: true
+- hosts: all
+  gather_facts: false
 
   tasks:
-    - name: Update apt package cache
-      apt:
-        update_cache: yes
+    - name: Stop template VM Will timeout
+      community.general.proxmox_kvm:
+        api_user: "{{ pve_user }}"
+        api_token_id: "{{ pve_token_id }}"
+        api_token_secret: "{{ pve_token_secret }}"
+        api_host: "{{ pve_api_host }}"
+        vmid: "{{ pve_template_vm_id }}"
+        state: stopped
+        force: true
+      delegate_to: localhost
 
-    - name: Install Nginx
-      apt:
-        name: nginx
-        state: present
-
-    - name: Start Nginx service
-      systemd:
-        name: nginx
-        state: started
+    - name: Stop template VM will succeed after 10 minutes
+      community.general.proxmox_kvm:
+        api_user: "{{ pve_user }}"
+        api_token_id: "{{ pve_token_id }}"
+        api_token_secret: "{{ pve_token_secret }}"
+        api_host: "{{ pve_api_host }}"
+        vmid: "{{ pve_template_vm_id }}"
+        state: stopped
+        force: true
+        timeout: 180
+      delegate_to: localhost
