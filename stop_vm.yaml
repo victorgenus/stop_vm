@@ -1,6 +1,11 @@
 ---
-- name: Stop VM in Proxmox
-  hosts: all
+- hosts: localhost
   tasks:
     - name: Stop VM
-      command: qm stop 158
+      proxmox_kvm:
+        api_user: nikandafee@pve
+        api_password: azbgsm4m3s
+        api_host: 10.147.248.21
+        vmid: 158
+        state: stopped
+
